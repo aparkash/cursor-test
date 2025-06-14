@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { useDebounce } from '../hooks/useDebounce';
 import { PokemonCard } from './PokemonCard';
 import { Pokemon, PokemonResponse } from '../types/pokemon';
+import { PokemonModal } from './PokemonModal';
+import { Heading } from './Heading';
 
 const INITIAL_RESULTS = 8;
 const LOAD_MORE_INCREMENT = 4;
@@ -18,6 +20,7 @@ export function Home() {
   const [matchingPokemon, setMatchingPokemon] = useState<Array<{ name: string; url: string }>>([]);
   const lastPokemonRef = useRef<HTMLDivElement>(null);
   const debouncedValue = useDebounce(searchValue, 600);
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -136,12 +139,16 @@ export function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-pokemon-blue/5 to-pokemon-red/5 dark:from-pokemon-blue/10 dark:to-pokemon-red/10 p-4">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-center text-pokemon-blue dark:text-pokemon-blue/90 [text-shadow:_2px_2px_4px_rgb(0_0_0_/_40%)] dark:[text-shadow:_2px_2px_4px_rgb(255_255_255_/_20%)]">
-          Pokemon Search
-        </h1>
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/95 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 pt-6 pb-4">
+          <div className="items-center">
+            <Heading>Pokemon Search</Heading>
+          </div>
+        </div>
+      </header>
 
-        <div className="relative max-w-md mx-auto mb-8">
+      <div className="max-w-7xl mx-auto p-4">
+        <div className="relative max-w-md mx-auto mb-6">
           <label htmlFor="pokemon-search" className="sr-only">
             Search for Pokemon
           </label>
@@ -152,14 +159,14 @@ export function Home() {
             onChange={handleSearchChange}
             placeholder="Search for a Pokemon..."
             aria-label="Search for Pokemon"
-            className="w-full p-3 pl-10 rounded-full border-2 border-pokemon-yellow/30 dark:border-pokemon-yellow/50 focus:border-pokemon-yellow focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            className="w-full p-3 pl-10 rounded-full border-2 border-pokemon-yellow/30 dark:border-pokemon-yellow/50 focus:border-pokemon-yellow focus:outline-none focus:ring-4 focus:ring-pokemon-yellow/40 shadow-lg bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all"
           />
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-pokemon-yellow dark:text-pokemon-yellow/90" aria-hidden="true">
             🔍
           </div>
         </div>
 
-        <div className="mt-4 space-y-4" role="region" aria-label="Search results">
+        <div className="mt-4 space-y-8" role="region" aria-label="Search results">
           {loading && !loadingMore && (
             <div className="text-center py-8" role="status" aria-live="polite">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-pokemon-yellow border-t-transparent" aria-hidden="true"></div>
@@ -177,16 +184,20 @@ export function Home() {
 
           {!loading && !error && pokemon.length > 0 && (
             <>
-              <div
-                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6"
+              <div 
+                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 sm:gap-8"
                 role="list"
                 aria-label="Pokemon search results"
               >
                 {pokemon.map((p, index) => (
                   <div
-                    key={p.name}
+                    key={p.name} 
                     role="listitem"
                     ref={index === pokemon.length - LOAD_MORE_INCREMENT ? lastPokemonRef : null}
+                    tabIndex={0}
+                    className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50"
+                    onClick={() => setSelectedPokemon(p)}
+                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedPokemon(p); }}
                   >
                     <PokemonCard pokemon={p} />
                   </div>
@@ -216,7 +227,7 @@ export function Home() {
           )}
 
           {!loading && !error && !searchValue && (
-            <div className="text-center py-12" role="status">
+            <div className="text-center pt-4" role="status">
               <div className="text-6xl mb-4" aria-hidden="true">🎮</div>
               <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Welcome to Pokemon Search!</h2>
               <p className="text-gray-600 dark:text-gray-300">Start typing to search for your favorite Pokemon</p>
@@ -240,6 +251,7 @@ export function Home() {
           )}
         </div>
       </div>
+      <PokemonModal pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} modalPadding="p-8" />
     </main>
   );
 } 
