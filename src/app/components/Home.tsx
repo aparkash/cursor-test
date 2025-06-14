@@ -14,7 +14,6 @@ export function Home() {
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [matchingPokemon, setMatchingPokemon] = useState<Array<{ name: string; url: string }>>([]);
   const lastPokemonRef = useRef<HTMLDivElement>(null);
@@ -22,7 +21,6 @@ export function Home() {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    setCurrentPage(1);
     setPokemon([]); // Clear existing Pokemon on new search
   };
 
@@ -123,7 +121,6 @@ export function Home() {
 
       setPokemon(prev => [...prev, ...newPokemonDetails]);
       setHasMore(matchingPokemon.length > endIndex);
-      setCurrentPage(prev => prev + 1);
 
       // Scroll to the last Pokemon from the previous page
       setTimeout(() => {
