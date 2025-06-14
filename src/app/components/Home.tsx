@@ -232,7 +232,7 @@ export function Home() {
                 <p className="text-gray-700 mb-2">💡 Try searching for:</p>
                 <ul className="text-left list-disc list-inside text-gray-600 space-y-1">
                   <li>Pikachu (the most famous one!)</li>
-                  <li>Charizard (if you're feeling fiery)</li>
+                  <li>{`Charizard (if you're feeling fiery)`}</li>
                   <li>Bulbasaur (the OG starter)</li>
                 </ul>
               </div>
