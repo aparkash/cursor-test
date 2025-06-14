@@ -227,7 +227,7 @@ export function Home() {
             <div className="text-center py-12" role="status">
               <div className="text-6xl mb-4" aria-hidden="true">🔍</div>
               <h2 className="text-xl font-semibold text-gray-800 mb-2">No Pokemon Found!</h2>
-              <p className="text-gray-600 mb-4">Looks like this Pokemon is still in Professor Oak's lab!</p>
+              <p className="text-gray-600 mb-4">{`Looks like this Pokemon is still in Professor Oak's lab!`}</p>
               <div className="max-w-md mx-auto bg-white/80 p-4 rounded-lg shadow-md">
                 <p className="text-gray-700 mb-2">💡 Try searching for:</p>
                 <ul className="text-left list-disc list-inside text-gray-600 space-y-1">
