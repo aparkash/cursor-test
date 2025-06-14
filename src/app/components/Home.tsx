@@ -135,9 +135,9 @@ export function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pokemon-blue/5 to-pokemon-red/5 p-4">
+    <main className="min-h-screen bg-gradient-to-br from-pokemon-blue/5 to-pokemon-red/5 dark:from-pokemon-blue/10 dark:to-pokemon-red/10 p-4">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-center text-pokemon-blue [text-shadow:_2px_2px_4px_rgb(0_0_0_/_40%)]">
+        <h1 className="text-4xl font-bold mb-8 text-center text-pokemon-blue dark:text-pokemon-blue/90 [text-shadow:_2px_2px_4px_rgb(0_0_0_/_40%)] dark:[text-shadow:_2px_2px_4px_rgb(255_255_255_/_20%)]">
           Pokemon Search
         </h1>
 
@@ -152,9 +152,9 @@ export function Home() {
             onChange={handleSearchChange}
             placeholder="Search for a Pokemon..."
             aria-label="Search for Pokemon"
-            className="w-full p-3 pl-10 rounded-full border-2 border-pokemon-yellow/30 focus:border-pokemon-yellow focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50 shadow-lg bg-white/80 backdrop-blur-sm"
+            className="w-full p-3 pl-10 rounded-full border-2 border-pokemon-yellow/30 dark:border-pokemon-yellow/50 focus:border-pokemon-yellow focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           />
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-pokemon-yellow" aria-hidden="true">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-pokemon-yellow dark:text-pokemon-yellow/90" aria-hidden="true">
             🔍
           </div>
         </div>
@@ -163,15 +163,15 @@ export function Home() {
           {loading && !loadingMore && (
             <div className="text-center py-8" role="status" aria-live="polite">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-pokemon-yellow border-t-transparent" aria-hidden="true"></div>
-              <p className="mt-2 text-gray-600">Searching for Pokemon...</p>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">Searching for Pokemon...</p>
             </div>
           )}
 
           {error && (
             <div className="text-center py-8" role="alert">
               <div className="text-6xl mb-4" aria-hidden="true">😢</div>
-              <p className="text-red-500 font-medium">{error}</p>
-              <p className="text-gray-600 mt-2">Try searching for a different Pokemon!</p>
+              <p className="text-red-500 dark:text-red-400 font-medium">{error}</p>
+              <p className="text-gray-600 dark:text-gray-300 mt-2">Try searching for a different Pokemon!</p>
             </div>
           )}
 
@@ -199,11 +199,11 @@ export function Home() {
                     onClick={loadMore}
                     disabled={loadingMore}
                     aria-label={loadingMore ? "Loading more Pokemon" : "Load more Pokemon"}
-                    className="group px-8 py-3 bg-white border-2 border-pokemon-yellow text-pokemon-yellow-800 rounded-full font-semibold text-base shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50"
+                    className="group px-8 py-3 bg-white dark:bg-gray-800 border-2 border-pokemon-yellow text-pokemon-yellow-800 dark:text-pokemon-yellow-200 rounded-full font-semibold text-base shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50"
                   >
                     {loadingMore ? (
                       <span className="flex items-center gap-2">
-                        <div className="w-4 h-4 border-2 border-pokemon-yellow-800 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
+                        <div className="w-4 h-4 border-2 border-pokemon-yellow-800 dark:border-pokemon-yellow-200 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
                         <span>Loading...</span>
                       </span>
                     ) : (
@@ -218,21 +218,21 @@ export function Home() {
           {!loading && !error && !searchValue && (
             <div className="text-center py-12" role="status">
               <div className="text-6xl mb-4" aria-hidden="true">🎮</div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Welcome to Pokemon Search!</h2>
-              <p className="text-gray-600">Start typing to search for your favorite Pokemon</p>
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Welcome to Pokemon Search!</h2>
+              <p className="text-gray-600 dark:text-gray-300">Start typing to search for your favorite Pokemon</p>
             </div>
           )}
 
           {!loading && !error && searchValue && pokemon.length === 0 && (
             <div className="text-center py-12" role="status">
               <div className="text-6xl mb-4" aria-hidden="true">🔍</div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">No Pokemon Found!</h2>
-              <p className="text-gray-600 mb-4">{`Looks like this Pokemon is still in Professor Oak's lab!`}</p>
-              <div className="max-w-md mx-auto bg-white/80 p-4 rounded-lg shadow-md">
-                <p className="text-gray-700 mb-2">💡 Try searching for:</p>
-                <ul className="text-left list-disc list-inside text-gray-600 space-y-1">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">No Pokemon Found!</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">Looks like this Pokemon is still in Professor Oak's lab!</p>
+              <div className="max-w-md mx-auto bg-white/80 dark:bg-gray-800/80 p-4 rounded-lg shadow-md">
+                <p className="text-gray-700 dark:text-gray-200 mb-2">💡 Try searching for:</p>
+                <ul className="text-left list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
                   <li>Pikachu (the most famous one!)</li>
-                  <li>{`Charizard (if you're feeling fiery)`}</li>
+                  <li>Charizard (if you're feeling fiery)</li>
                   <li>Bulbasaur (the OG starter)</li>
                 </ul>
               </div>
