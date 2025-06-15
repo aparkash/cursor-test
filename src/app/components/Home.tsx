@@ -21,6 +21,7 @@ export function Home() {
   const lastPokemonRef = useRef<HTMLDivElement>(null);
   const debouncedValue = useDebounce(searchValue, 600);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -190,17 +191,15 @@ export function Home() {
                 aria-label="Pokemon search results"
               >
                 {pokemon.map((p, index) => (
-                  <div
-                    key={p.name} 
-                    role="listitem"
-                    ref={index === pokemon.length - LOAD_MORE_INCREMENT ? lastPokemonRef : null}
-                    tabIndex={0}
-                    className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50"
+                  <button
+                    key={p.name}
+                    type="button"
+                    className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-pokemon-yellow/50 rounded-xl text-left"
                     onClick={() => setSelectedPokemon(p)}
-                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedPokemon(p); }}
+                    aria-label={`View details for ${p.name}`}
                   >
                     <PokemonCard pokemon={p} />
-                  </div>
+                  </button>
                 ))}
               </div>
 
